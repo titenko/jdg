@@ -1,0 +1,76 @@
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    
+    <script>
+    window.BASEURL = "{{ site.baseurl | default: '' }}";
+    window.SEARCH_DATA_PATH = (window.BASEURL.endsWith('/') ? window.BASEURL.slice(0, -1) : window.BASEURL) + "/SearchData.json";
+    window.SITETITLE = "{{ site.title | escape }}";
+    </script>
+
+    <meta content="{{ site.title | default: site.heading }}" property="og:site_name" />
+    <meta content="{{ site.description | default: 'A Jekyll Garden site' }}" property="og:description">
+    <meta content="{{ site.url }}/about/" property="article:author">
+    <meta name="base-url" content="{{ site.baseurl }}">
+    <base href="{{ site.baseurl }}/">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{{ site.baseurl }}/manifest.json" />
+    <meta name="theme-color" content="#18181c">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="{{ site.title }}">
+    <meta name="application-name" content="{{ site.title }}">
+    <meta name="description" content="{{ site.description }}">
+    <link rel="apple-touch-icon" href="{{ site.baseurl }}/assets/icons/icon-192.png">
+    <!-- PWA Manifest -->
+    {%- if site.og_image -%}
+    <meta property="og:image" content="{{ site.baseurl }}{{ site.og_image }}">
+    {%- endif -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    {%- if page.title -%}
+    <meta content="{{ page.title }}" property="og:title">
+    <meta content="article" property="og:type">
+    <meta content="{{ site.url }}{{ page.url }}" property="og:url">
+    {%- else -%}
+    <meta content="website" property="og:type">
+    <meta content="{{ site.url }}{{ page.url }}" property="og:url">
+    {%- endif -%}
+
+    <title>{%- if page.title -%}{{ page.title }} - {%- endif -%}{{ site.heading }}</title>
+    <link rel="canonical" href="{{site.url}}{{page.url}}" />
+    {%- if site.apple_touch_icon -%}
+    <link rel="apple-touch-icon" href="{{ site.baseurl }}{{ site.apple_touch_icon }}">
+    {%- endif -%}
+    {%- if site.favicon -%}
+    <link rel="icon" href="{{ site.baseurl }}{{ site.favicon }}" type="image/svg+xml" sizes="any" />
+    {%- endif -%}
+    {%- if site.css_file -%}
+    <link href="{{ site.baseurl }}{{ site.css_file }}" rel="stylesheet" media="all" class="default" />
+    {%- else -%}
+    <link href="{{ site.baseurl }}/assets/css/style.css" rel="stylesheet" media="all" class="default" />
+    
+    {%- endif -%}
+    {%- if site.katex -%}
+    <link href="{{ site.baseurl }}/assets/css/vendor/Katex.css" rel="stylesheet" media="all" class="default" />
+    {%- endif -%}
+    <link href="{{ site.baseurl }}/assets/css/header.css" rel="stylesheet" media="all" class="default" />
+    <link rel="icon" href="{{ site.baseurl }}/assets/img/favicon.ico" type="image/x-icon" />
+    <!--[if IE]>
+        {%- if site.ie_css -%}
+        <link href="{{ site.baseurl }}{{ site.ie_css }}" rel="stylesheet" type="text/css"/>
+        {%- else -%}
+        <link href="{{ site.baseurl }}/assets/css/ie-target.css" rel="stylesheet" type="text/css"/>
+        {%- endif -%}
+    <![endif]-->
+    <!--<link href="/assets/css/prism.css" rel="stylesheet" />-->
+    <link rel="alternate" type="application/rss+xml" href="{{ site.url }}/feed.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="manifest" href="{{ site.baseurl }}/manifest.json">
+    <link rel="manifest" href="{{ site.baseurl }}/manifest.webmanifest">
+    <script>
+    if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('{{ site.baseurl }}/service-worker.js');
+    }
+    </script>
+</head>

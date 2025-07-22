@@ -1,0 +1,312 @@
+<div id="header-root" 
+     data-baseurl="{{ site.baseurl | default: '/' }}" 
+     data-sitetitle="{{ site.title | escape }}">
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    const root = document.getElementById("header-root");
+    if (!root) {
+      console.error("Element with id 'header-root' not found");
+      return;
+    }
+    const baseurlRaw = root.dataset.baseurl || "/";
+    const BASEURL = baseurlRaw.endsWith("/") ? baseurlRaw : baseurlRaw + "/";
+    const SITETITLE = root.dataset.sitetitle || "Site Title";
+
+    function createSVGElement(tag, attrs = {}) {
+      const xmlns = "http://www.w3.org/2000/svg";
+      const elem = document.createElementNS(xmlns, tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        if(k === "style") {
+          elem.style.cssText = v;
+        } else {
+          elem.setAttribute(k, v);
+        }
+      }
+      return elem;
+    }
+
+    // иконки
+    function createSunIcon() {
+      const svg = createSVGElement("svg", {
+        viewBox: "0 0 35 35",
+        width: "24",
+        height: "24",
+        fill: "currentColor",
+        class: "icon-sun",
+        style: "display:none; cursor:pointer;"
+      });
+      const path = createSVGElement("path", {
+        d: "M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5 S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5 C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6 C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9 c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44 l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5 c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06 L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2 C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29 c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7 C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5 c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"
+      });
+      svg.appendChild(path);
+      return svg;
+    }
+
+    function createMoonIcon() {
+      const svg = createSVGElement("svg", {
+        viewBox: "0 0 100 100",
+        width: "24",
+        height: "24",
+        fill: "currentColor",
+        class: "icon-moon",
+        style: "display:none; cursor:pointer;"
+      });
+      const path = createSVGElement("path", {
+        d: "M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571 C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23 c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369 c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65 c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"
+      });
+      svg.appendChild(path);
+      return svg;
+    }
+
+    function createSearchIcon() {
+      const svg = createSVGElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        style: "cursor:pointer;"
+      });
+      const circle = createSVGElement("circle", {
+        cx: "10",
+        cy: "10",
+        r: "9",
+        stroke: "currentColor",
+        "stroke-width": "2"
+      });
+      const line = createSVGElement("line", {
+        x1: "16.36",
+        y1: "16.36",
+        x2: "23",
+        y2: "23",
+        stroke: "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round"
+      });
+      svg.appendChild(circle);
+      svg.appendChild(line);
+      return svg;
+    }
+
+    function createBurgerIcon() {
+      const svg = createSVGElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        style: "cursor:pointer;"
+      });
+      const path1 = createSVGElement("path", {
+        d: "M3 3H21",
+        stroke: "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      });
+      const path2 = createSVGElement("path", {
+        d: "M3 12H21",
+        stroke: "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      });
+      const path3 = createSVGElement("path", {
+        d: "M3 21H21",
+        stroke: "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      });
+      svg.appendChild(path1);
+      svg.appendChild(path2);
+      svg.appendChild(path3);
+      return svg;
+    }
+
+    function createElement(tag, attrs = {}, children = []) {
+      const el = document.createElement(tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        if (k === "class") {
+          el.className = v;
+        } else if (k === "text") {
+          el.textContent = v;
+        } else {
+          el.setAttribute(k, v);
+        }
+      }
+      children.forEach(child => el.appendChild(child));
+      return el;
+    }
+
+    // Создаем элементы
+    const logoImg = createElement("img", {
+      src: BASEURL + "assets/img/icon.png",
+      alt: "Site Icon",
+      class: "site-icon",
+      width: "32",
+      height: "32"
+    });
+
+    const siteTitle = createElement("span", { class: "site-title", text: SITETITLE });
+
+    const logoLink = createElement("a", { href: BASEURL, class: "logo-link" }, [logoImg, siteTitle]);
+
+    const navLeft = createElement("div", { class: "nav-left" }, [logoLink]);
+
+    const themeToggle = createElement("button", {
+      class: "theme-toggle",
+      "aria-label": "Toggle dark mode",
+      title: "Toggle dark mode",
+      type: "button"
+    });
+
+    const sunIcon = createSunIcon();
+    const moonIcon = createMoonIcon();
+
+    themeToggle.appendChild(sunIcon);
+    themeToggle.appendChild(moonIcon);
+
+    const searchBtn = createElement("div", {
+      class: "search-button",
+      role: "button",
+      tabindex: "0",
+      "aria-label": "Search",
+      title: "Search"
+    }, [createSearchIcon()]);
+
+    const dropdownSearchMenu = createElement("div", { class: "dropdown-search-menu" });
+    const searchInput = createElement("input", {
+      id: "search-input",
+      type: "search",
+      class: "search-input",
+      placeholder: "Search...",
+      autocomplete: "off"
+    });
+    const searchResults = createElement("div", { id: "search-results", class: "search-results" });
+    const searchPlaceholder = createElement("div", { class: "search-placeholder", text: "Enter your search query" });
+    searchResults.appendChild(searchPlaceholder);
+    dropdownSearchMenu.appendChild(searchInput);
+    dropdownSearchMenu.appendChild(searchResults);
+
+    const dropdownSearch = createElement("div", { class: "dropdown-search" }, [searchBtn, dropdownSearchMenu]);
+
+    const hamburgerBtn = createElement("div", {
+      class: "hamburger",
+      role: "button",
+      tabindex: "0",
+      "aria-label": "Menu",
+      title: "Menu"
+    }, [createBurgerIcon()]);
+
+    const dropdownMenu = createElement("div", { class: "dropdown-menu" });
+    const links = [
+      { href: BASEURL, text: "Home" },
+      { href: BASEURL + "notes", text: "Notes" },
+      { href: BASEURL + "about", text: "About" },
+    ];
+    links.forEach(({ href, text }) => {
+      const a = createElement("a", { href, text });
+      dropdownMenu.appendChild(a);
+    });
+
+    const dropdown = createElement("div", { class: "dropdown" }, [hamburgerBtn, dropdownMenu]);
+
+    const navRight = createElement("div", { class: "nav-right" }, [themeToggle, dropdownSearch, dropdown]);
+
+    const nav = createElement("nav", { class: "nav" }, [navLeft, navRight]);
+
+    const headerContainer = createElement("div", { class: "header-container" }, [nav]);
+
+    root.appendChild(headerContainer);
+
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem("theme") || "dark";
+
+    function updateThemeIcons(theme) {
+      if (theme === "dark") {
+        sunIcon.style.display = "inline";
+        moonIcon.style.display = "none";
+      } else {
+        sunIcon.style.display = "none";
+        moonIcon.style.display = "inline";
+      }
+    }
+
+    html.setAttribute("data-theme", savedTheme);
+    updateThemeIcons(savedTheme);
+
+    themeToggle.addEventListener("click", () => {
+      const current = html.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      updateThemeIcons(next);
+    });
+
+    hamburgerBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      dropdown.classList.toggle("active");
+      hamburgerBtn.classList.toggle("active");
+
+      dropdownSearch.classList.remove("active");
+      dropdownSearchMenu.classList.remove("active");
+      searchInput.value = "";
+      document.body.style.overflow = "";
+    });
+
+    searchBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      if (dropdownSearch.classList.contains("active")) {
+        dropdownSearch.classList.remove("active");
+        dropdownSearchMenu.classList.remove("active");
+        searchInput.value = "";
+        searchInput.blur();
+        document.body.style.overflow = "";
+      } else {
+        dropdownSearch.classList.add("active");
+        dropdownSearchMenu.classList.add("active");
+        document.body.style.overflow = "hidden";
+        setTimeout(() => searchInput.focus(), 100);
+      }
+      dropdown.classList.remove("active");
+      hamburgerBtn.classList.remove("active");
+    });
+
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".dropdown")) {
+        dropdown.classList.remove("active");
+        hamburgerBtn.classList.remove("active");
+      }
+      if (!e.target.closest(".dropdown-search") && !e.target.closest(".dropdown-search-menu")) {
+        dropdownSearch.classList.remove("active");
+        dropdownSearchMenu.classList.remove("active");
+        searchInput.value = "";
+        document.body.style.overflow = "";
+      }
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && dropdownSearchMenu.classList.contains("active")) {
+        dropdownSearch.classList.remove("active");
+        dropdownSearchMenu.classList.remove("active");
+        searchInput.value = "";
+        searchInput.blur();
+        document.body.style.overflow = "";
+      }
+    });
+
+    dropdownSearchMenu.addEventListener("click", e => {
+      e.stopPropagation();
+    });
+
+    console.log("Header script initialized successfully");
+  } catch (err) {
+    console.error("Error initializing header script:", err);
+  }
+});
+</script>
+
